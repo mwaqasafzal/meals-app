@@ -1,12 +1,25 @@
 import React from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
+import { CATEGORIES } from '../dummy-data';
 
-const CategoryMealScreen = (props) => {
-    const {navigation} = props;
-    return (<View style={styles.container}>
-                <Text>Category Meal Screen</Text>
-                <Button title="Go to Meal Detail" onPress={()=>navigation.push('MealDetail')}/>
-            </View>);
+const CategoryMealsScreen = (props) => {
+    const { navigation } = props;
+    
+    const catId = navigation.getParam('categoryId');
+    const category = CATEGORIES.find(cat => cat.id === catId);
+   
+    return <View style={styles.container}><Text>Category ({category.title}) Meal</Text></View>
+}
+
+CategoryMealsScreen.navigationOptions = (navigationDetail) => {
+  const { navigation } = navigationDetail;
+
+  const catId = navigation.getParam('categoryId');
+  const category = CATEGORIES.find(cat => cat.id === catId);
+
+  return {
+    headerTitle: category.title || 'Category Meal'
+  }
 }
 
 const styles = StyleSheet.create({
@@ -17,4 +30,4 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
 });
-export default CategoryMealScreen;
+export default CategoryMealsScreen;
